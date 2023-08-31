@@ -23,22 +23,41 @@ const getCardsLink =async (data) =>{
     const cardsLinkToJson = await cardsLink.json();
     const cardsLinkData = cardsLinkToJson.data;
     showAllCards(cardsLinkData)
+    sortByViews(cardsLinkData)
 }
 getCardsLink('1000')
 
+
+
+
+
+
+
+
 const showAllCards = (data) =>{
    const allCardsContainer = document.getElementById('all-Cards-Container');
+   const errorContainer = document.getElementById('error-container');
    allCardsContainer.innerHTML = '';
+   errorContainer.innerHTML = '';
    if(data.length > 0){
     data.forEach(element => {
        console.log(element)
        const div = document.createElement('div');
        div.innerHTML =`
    <div class="card card-compact rounded-none">
-   <figure><img class="h-48 rounded-lg w-full" src="${element?.thumbnail}" alt="Shoes" /></figure>
-   <div class="card-body">
-    <h2 class="card-title">Shoes!</h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
+   <figure class="relative"><img class="h-48 rounded-lg w-full" src="${element?.thumbnail}" alt="no image" />${element.others.posted_date ? `<p class="absolute bottom-3 right-4 bg-[#171717] px-3 py-1 text-white rounded-sm">${parseInt(element?.others?.posted_date/3600)}hrs ${parseInt(element?.others?.posted_date/60)%60} min ago</p>` : ''}</img></figure>
+   <div class="pt-6">
+   <div class="flex items-center gap-2">
+   <img class="w-12 h-12 rounded-full" src="${element?.authors.map(item=> item.profile_picture)}" alt="no image" />
+   <div>
+   <p class="text-xl font-semibold">${element?.title}</p>
+   <div class="flex items-center gap-1">
+   <p class="inline-block">${element?.authors.map(item=> item.profile_name)}</p>
+   ${element?.authors.map(item=> item.verified === true ? `<img class="w-5" src="validate.png" alt="no image" />` : '')}
+   </div>
+   <p>${element?.others?.views}</p>
+   </div>
+   </div>
     
   </div>
   </div>
@@ -46,6 +65,11 @@ const showAllCards = (data) =>{
        allCardsContainer.appendChild(div)
    });
 }else{
-    const errorContainer = document.getElementById('error-container');
+    errorContainer.innerHTML = `
+    <div class="flex flex-col justify-center items-center mt-10 gap-y-5">
+    <img src="Icon.png" alt="">
+    <p class="text-center text-3xl font-bold">Oops!! Sorry, There is no<br> content here</p>
+    </div>
+    `
 }
 }
