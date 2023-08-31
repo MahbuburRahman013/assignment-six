@@ -7,9 +7,7 @@ const categoryLink =async () =>{
 categoryLink()
 const categoriesShow = (data) =>{
    const categoryContainer = document.getElementById('category-container');
-    
    data.forEach(element => {
-    // console.log(element)
     const div = document.createElement('div');
     div.innerHTML = `
     <button onclick="getCardsLink('${element?.category_id}')" class="btn normal-case rounded">${element?.category}</button>
@@ -18,20 +16,25 @@ const categoriesShow = (data) =>{
    });
 }
 
+const sortByViews =async () =>{
+    const cardsLink = await fetch(`https://openapi.programming-hero.com/api/videos/category/${'1000'}`);
+    const cardsLinkToJson = await cardsLink.json();
+    const cardsLinkData = cardsLinkToJson.data;
+    cardsLinkData.forEach(element=>{
+        element.others.views = parseFloat((element.others.views).replace('K',''))
+        
+    })
+    const optimize = cardsLinkData.sort((a, b) => b.others.views - a.others.views);
+    showAllCards(optimize)
+}
+
 const getCardsLink =async (data) =>{
     const cardsLink = await fetch(`https://openapi.programming-hero.com/api/videos/category/${data}`);
     const cardsLinkToJson = await cardsLink.json();
     const cardsLinkData = cardsLinkToJson.data;
     showAllCards(cardsLinkData)
-    sortByViews(cardsLinkData)
 }
 getCardsLink('1000')
-
-
-
-
-
-
 
 
 const showAllCards = (data) =>{
@@ -41,7 +44,6 @@ const showAllCards = (data) =>{
    errorContainer.innerHTML = '';
    if(data.length > 0){
     data.forEach(element => {
-       console.log(element)
        const div = document.createElement('div');
        div.innerHTML =`
    <div class="card card-compact rounded-none">
@@ -55,7 +57,7 @@ const showAllCards = (data) =>{
    <p class="inline-block">${element?.authors.map(item=> item.profile_name)}</p>
    ${element?.authors.map(item=> item.verified === true ? `<img class="w-5" src="validate.png" alt="no image" />` : '')}
    </div>
-   <p>${element?.others?.views}</p>
+   <p>${parseFloat(element?.others?.views)}K views</p>
    </div>
    </div>
     
