@@ -9,15 +9,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <header class="container mx-auto flex border-b-[3px] items-center border-gray-300 justify-between pb-5 mt-10">
+    <header class="container mx-auto flex flex-col md:flex-row gap-y-5 md:px-10 lg:px-0 border-b-[3px] items-center border-gray-300 justify-between pb-5 mt-10">
        <div class="flex-1"><img src="Logo.png" alt=""></div>
        <div class="flex-1 text-center"><button onclick="sortByViews()" class="btn normal-case rounded">Sort by view</button></div>
        <div class="flex-1 text-right "><button id="blogSite" class="btn normal-case rounded">Blog</button></div>
     </header>
     <main class="container mx-auto">
-       <div class="flex items-center justify-center gap-x-12 mt-10" id="category-container"></div>
-       <section id="all-Cards-Container" class="grid grid-cols-4 gap-10 mt-10"></section>
-       <div id="error-container"></div>
+       <div class="flex flex-wrap gap-y-5 items-center justify-center gap-x-12 mt-10" id="category-container"></div>
+       <section id="all-Cards-Container" class="grid px-5 lg:px-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-10"></section>
+       <div class="px-5 lg:px-0 mb-10 lg:mb-0" id="error-container"></div>
     </main>
     <script src="script.js"></script>
 </body>
