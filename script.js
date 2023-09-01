@@ -49,8 +49,8 @@ const showAllCards = (data) =>{
    <div class="card card-compact rounded-none">
    <figure class="relative"><img class="h-48 rounded-lg w-full" src="${element?.thumbnail}" alt="no image" />${element.others.posted_date ? `<p class="absolute bottom-3 right-4 bg-[#171717] px-3 py-1 text-white rounded-sm">${parseInt(element?.others?.posted_date/3600)}hrs ${parseInt(element?.others?.posted_date/60)%60} min ago</p>` : ''}</img></figure>
    <div class="pt-6">
-   <div class="flex items-center gap-2">
-   <img class="w-12 h-12 rounded-full" src="${element?.authors.map(item=> item.profile_picture)}" alt="no image" />
+   <div class="flex gap-2">
+   <img class="w-10 h-10 rounded-full" src="${element?.authors.map(item=> item.profile_picture)}" alt="no image" />
    <div>
    <p class="text-xl font-semibold">${element?.title}</p>
    <div class="flex items-center gap-1">
@@ -75,3 +75,4 @@ const showAllCards = (data) =>{
     `
 }
 }
+document.getElementById('blogSite').addEventListener('click', () =>  window.location.href = 'blog.html')
