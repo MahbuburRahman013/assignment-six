@@ -15,16 +15,13 @@ const categoriesShow = (data) =>{
     categoryContainer.appendChild(div)
    });
 }
-
-const sortByViews =async () =>{
-    const cardsLink = await fetch(`https://openapi.programming-hero.com/api/videos/category/${'1000'}`);
-    const cardsLinkToJson = await cardsLink.json();
-    const cardsLinkData = cardsLinkToJson.data;
-    cardsLinkData.forEach(element=>{
+var showView;
+const sortByViews = () =>{
+    showView.forEach(element=>{
         element.others.views = parseFloat((element.others.views).replace('K',''))
         
     })
-    const optimize = cardsLinkData.sort((a, b) => b.others.views - a.others.views);
+    const optimize = showView.sort((a, b) => b.others.views - a.others.views);
     showAllCards(optimize)
 }
 
@@ -38,6 +35,7 @@ getCardsLink('1000')
 
 
 const showAllCards = (data) =>{
+    showView = data;
    const allCardsContainer = document.getElementById('all-Cards-Container');
    const errorContainer = document.getElementById('error-container');
    allCardsContainer.innerHTML = '';
